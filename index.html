@@ -11,9 +11,6 @@
   <meta property="og:url" content="">
   <meta property="og:image" content="">
 
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
 
@@ -50,8 +47,8 @@
         import setUpHUD from './js/HUDConfig.js';
 
         const canvas = document.getElementById("renderCanvas"); // Get the canvas element
-        const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-       
+        const engine = new BABYLON.Engine(canvas, true ,{ stencil: true }); // Generate the BABYLON 3D engine
+        let advancedTexture;
         let startGameButton;
         let player1 = {};
         let player2 = {};
@@ -81,12 +78,16 @@
             question
         }
 
+        let cube;
+      
+
         const createScene = async function () {
             // Creates a basic Babylon Scene object
             const scene = new BABYLON.Scene(engine);
             // Creates and positions a free camera
-            const camera = new BABYLON.FreeCamera("camera1", 
-                new BABYLON.Vector3(0, 2, 0), scene);
+            const camera = new BABYLON.UniversalCamera("camera1", 
+                // new BABYLON.Vector3(0, 2, 0), scene);
+                new BABYLON.Vector3(0, 15, 0), scene);
             // Targets the camera to scene origin
             camera.setTarget(BABYLON.Vector3.Zero());
             // This attaches the camera to the canvas
@@ -101,17 +102,45 @@
                 {diameter: 2, segments: 32}, scene);
             // Move the sphere upward 1/2 its height
             sphere.position.y = 1;
+
+
+            var faceColors = [];
+                faceColors[0] = BABYLON.Color3.Blue();
+                faceColors[1] = BABYLON.Color3.Red();
+                faceColors[2] = BABYLON.Color3.Green();
+                faceColors[3] = BABYLON.Color3.White();
+                faceColors[4] = BABYLON.Color3.Yellow();
+                faceColors[5] = BABYLON.Color3.Black();
+
+            const options = {
+                size: 1,
+                faceColors
+            }
+
+            cube = BABYLON.MeshBuilder.CreateBox("box", options, scene);
+            cube.position.x = 4.3;
+            cube.position.y = 2.5;
+            cube.position.z = 2;
+            cube.id="answer1";
+
+            cube.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+            // const myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+            // myMaterial.diffuseColor = new BABYLON.Color3.FromHexString("#1B97C2");
+            // cube.material = myMaterial;
+
+
             // Built-in 'ground' shape.
             const ground = BABYLON.MeshBuilder.CreateGround("ground", 
-                {width: 6, height: 6}, scene);
+                {width: 16, height: 12}, scene);
             //GUI
-            let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
+            advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
             let loadedGUI = await advancedTexture.parseFromURLAsync("./json/guiTexture.json");
 
             setUpButtons(advancedTexture, buttonList);
             setUpHUD(advancedTexture, HUD);
 
             HUD.question.isVisible = false;
+            // debugger;
             buttonList.startGameButton.onPointerUpObservable.add(function() {
                     hideTitleScreen();
             });
@@ -124,8 +153,65 @@
             // Register a render loop to repeatedly render the scene
             engine.runRenderLoop(function () {
                 scene.render();
+                // console.log(scene.pointerX + '||' + scene.pointerY);
             });
+            const hl = new BABYLON.HighlightLayer("hl1", scene);
+            scene.onKeyboardObservable.add((kbInfo) => {
+                if(kbInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN){
+                    switch (kbInfo.event.key) {
+                            case 'A':
+                            case 'a':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                            // Add the highlight layer.
+                           
+                            hl.addMesh(cube, BABYLON.Color3.Green());
+                            HUD.player1Score.text = Number(HUD.player1Score.text) + 1;
+                                break;
+                            case 'S':
+                            case 's':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                                break;
+                            case 'D':
+                            case 'd':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                                break;
+                            case 'ArrowLeft':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                                break;
+                            case 'ArrowUp':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                                break;
+                            case 'ArrowRight':
+                            console.log("KEY DOWN: ", kbInfo.event.key);
+                                break;
+    
+                        }
+                }
+                else{
+                    hl.removeMesh(cube);
+                }
+            });
+
+            buttonList.player1.answer1.onPointerUpObservable.add(function(e) {
+                    console.log(e);
+                   const pick = scene.pick(e.x, e.y);
+                   console.log(advancedTexture.pick(e.x, e.y));
+                 
+                //    console.log(pick);
+                //         setTimeout(() => {
+                //             scene.simulatePointerDown(pick)
+                //             console.log('timeout');
+                //             scene.simulatePointerUp(pick)
+                // }, 3000)
+
+             });
+           
+
+
         })
+
+    
+       
        
         const hideTitleScreen = () => {
                 HUD.title.isVisible = false;
