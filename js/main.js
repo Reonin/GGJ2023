@@ -2,7 +2,9 @@ import {BUTTON_ANSWER_X, BUTTON_ANSWER_Y, BUTTON_ANSWER_Z } from './Constants.js
 import setUpButtons from './buttonConfig.js';
 import setUpHUD from './HUDConfig.js';
 import loadAssets from './AssetLoader.js';
-import {changeRound, checkForCorrectAnswer} from './RoundSwap.js';
+import { GameManager } from './RoundSwap.js';
+
+// import {changeRound, checkForCorrectAnswer} from './RoundSwap.js';
 export function init() {
    
     const canvas = document.getElementById("renderCanvas"); // Get the canvas element
@@ -12,6 +14,7 @@ export function init() {
     let player1 = {};
     let player2 = {};
     let correctAnswer;
+    let currentRound = 0;
 
     const buttonList = {
         startGameButton,
@@ -36,7 +39,8 @@ export function init() {
         scoreLabel2,
         title,
         subtitle,
-        question
+        question,
+        currentRound,
     }
     let answer1;
     let answer2;
@@ -44,7 +48,7 @@ export function init() {
 
     let disc;
     let textureObj;
-
+    const gameManager = new GameManager();
     const createScene = async function () {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
@@ -123,7 +127,7 @@ export function init() {
         // debugger;
         buttonList.startGameButton.onPointerUpObservable.add(function() {
                 hideTitleScreen();
-                changeRound(1, HUD, true);
+                gameManager.changeRound(1, HUD, true);
         });
 
         return scene;
@@ -146,35 +150,35 @@ export function init() {
                         // Add the highlight layer.
                         
                         hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
-                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD.correctAnswer);
+                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD);
                             break;
                         case 'S':
                         case 's':
                         hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
-                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD.correctAnswer);
+                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD);
                         console.log("KEY DOWN: ", kbInfo.event.key);
                             break;
                         case 'D':
                         case 'd':
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
-                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD.correctAnswer);
+                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD);
                             break;
                         
                         case 'ArrowLeft':
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         hl.addMesh(HUD.player2.meshes[0], BABYLON.Color3.Green());
-                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD.correctAnswer);
+                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD);
                             break;
                         case 'ArrowUp':
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
-                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD.correctAnswer);
+                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD);
                             break;
                         case 'ArrowRight':
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         hl.addMesh(HUD.player2.meshes[2], BABYLON.Color3.Green());
-                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD.correctAnswer);
+                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD);
                             break;
 
                     }
