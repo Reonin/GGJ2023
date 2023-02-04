@@ -2,7 +2,7 @@ import {BUTTON_ANSWER_X, BUTTON_ANSWER_Y, BUTTON_ANSWER_Z } from './Constants.js
 import setUpButtons from './buttonConfig.js';
 import setUpHUD from './HUDConfig.js';
 import loadAssets from './AssetLoader.js';
-import changeRound from './RoundSwap.js';
+import {changeRound, checkForCorrectAnswer} from './RoundSwap.js';
 export function init() {
    
     const canvas = document.getElementById("renderCanvas"); // Get the canvas element
@@ -11,6 +11,7 @@ export function init() {
     let startGameButton;
     let player1 = {};
     let player2 = {};
+    let correctAnswer;
 
     const buttonList = {
         startGameButton,
@@ -28,6 +29,7 @@ export function init() {
     const HUD = {
         player1, 
         player2,
+        correctAnswer,
         player1Score,
         player2Score,
         scoreLabel1,
@@ -105,7 +107,6 @@ export function init() {
         };
         
         
-       debugger;
         
         HUD.player1.answer1.linkWithMesh(HUD.player1.meshes[0]);
         HUD.player1.answer2.linkWithMesh(HUD.player1.meshes[1]);
@@ -145,28 +146,36 @@ export function init() {
                         // Add the highlight layer.
                         
                         hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
-                        HUD.player1Score.text = Number(HUD.player1Score.text) + 1;
+                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD.correctAnswer);
                             break;
                         case 'S':
                         case 's':
-
                         hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
+                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD.correctAnswer);
                         console.log("KEY DOWN: ", kbInfo.event.key);
                             break;
                         case 'D':
                         case 'd':
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
+                        HUD.player1Score.text = checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD.correctAnswer);
                             break;
+                        
                         case 'ArrowLeft':
                         console.log("KEY DOWN: ", kbInfo.event.key);
+                        hl.addMesh(HUD.player2.meshes[0], BABYLON.Color3.Green());
+                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD.correctAnswer);
                             break;
                         case 'ArrowUp':
                         console.log("KEY DOWN: ", kbInfo.event.key);
+                        hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
+                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD.correctAnswer);
                             break;
                         case 'ArrowRight':
                         console.log("KEY DOWN: ", kbInfo.event.key);
-                            break;a
+                        hl.addMesh(HUD.player2.meshes[2], BABYLON.Color3.Green());
+                        HUD.player2Score.text = checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD.correctAnswer);
+                            break;
 
                     }
             }
@@ -174,7 +183,9 @@ export function init() {
                 HUD.player1.meshes.forEach(element => {
                     hl.removeMesh(element);
                 });
-                // hl.removeMesh(HUD.player1.meshes[0]);
+                HUD.player2.meshes.forEach(element => {
+                    hl.removeMesh(element);
+                });
             }
         });
 
@@ -206,7 +217,7 @@ export function init() {
             HUD.player1.meshes.forEach(element => {
                element.material = textureObj.blue_mat;
             });
-            debugger;
+            // debugger;
             HUD.player2.meshes.forEach(element => {
                 element.material = textureObj.red_mat;
              });
