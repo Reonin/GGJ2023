@@ -7,6 +7,5 @@ export default function setUpHUD(advancedTexture, HUD){
     HUD.subtitle = advancedTexture.getControlByName("Subtitle");
     HUD.question = advancedTexture.getControlByName("Question");
 
-
     HUD.question.isVisible = false;
 }
