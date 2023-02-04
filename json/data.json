@@ -1,10 +1,19 @@
  {
     "1": {
-        "problem": "sqrt(16)",
+        "problem": "What is the Square root of 16?",
         "correctAnswer": "4",
         "wrongAnswer": [
             "2", 
             "3"
+        ],
+        "difficulty": "easy"
+    },
+    "2": {
+        "problem": "What is the Square root of 9?",
+        "correctAnswer": "3",
+        "wrongAnswer": [
+            "1", 
+            "2"
         ],
         "difficulty": "easy"
     }

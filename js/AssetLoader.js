@@ -6,9 +6,15 @@ export default function loadAssets(BABYLON, scene){
     stone_texture.diffuseTexture = new BABYLON.Texture("../textures/stoneso.png", scene);
 
 
-    const purple_mat = new BABYLON.StandardMaterial("", scene);
+    const purple_mat = new BABYLON.StandardMaterial("purple_mat", scene);
     purple_mat.diffuseColor = new BABYLON.Color3(1, 0, 1);
 
-    const textureObj = {stone_texture, purple_mat};
+    const blue_mat = new BABYLON.StandardMaterial("blue_mat", scene);
+    blue_mat.diffuseColor = new BABYLON.Color3(0, 0, 1);
+
+    const red_mat = new BABYLON.StandardMaterial("red_mat", scene);
+    red_mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+
+    const textureObj = {stone_texture, purple_mat, blue_mat, red_mat};
 return textureObj;
 }

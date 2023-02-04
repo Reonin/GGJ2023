@@ -14,8 +14,6 @@ export function init() {
 
     const buttonList = {
         startGameButton,
-        player1, 
-        player2
     };
 
     let player1Score = {},
@@ -28,6 +26,8 @@ export function init() {
 
 
     const HUD = {
+        player1, 
+        player2,
         player1Score,
         player2Score,
         scoreLabel1,
@@ -36,6 +36,9 @@ export function init() {
         subtitle,
         question
     }
+    let answer1;
+    let answer2;
+    let answer3;
 
     let disc;
     let textureObj;
@@ -44,13 +47,13 @@ export function init() {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
         // Creates and positions a free camera
-        const camera = new BABYLON.FreeCamera("camera1", 
+        const camera = new BABYLON.UniversalCamera("camera1", 
             // new BABYLON.Vector3(0, 2, 0), scene);
         new BABYLON.Vector3(0, 15, 0), scene);
         // Targets the camera to scene origin
         camera.setTarget(BABYLON.Vector3.Zero());
         // This attaches the camera to the canvas
-        camera.attachControl(canvas, true);
+        // camera.attachControl(canvas, true);
         // Creates a light, aiming 0,1,0 - to the sky
         const light = new BABYLON.HemisphericLight("light", 
             new BABYLON.Vector3(0, 1, 0), scene);
@@ -64,7 +67,6 @@ export function init() {
         textureObj = loadAssets(BABYLON, scene);
         setUpButtons(advancedTexture, buttonList);
         setUpHUD(advancedTexture, HUD);
-        // debugger;
         HUD.question.isVisible = false;
         
 
@@ -74,24 +76,53 @@ export function init() {
         // Move the sphere upward 1/2 its height
         sphere.material = textureObj.stone_texture;
 
+        HUD.player1.meshes = [
+           {}, {}, {}
+        ];
+      
+        HUD.player2.meshes = [
+            {}, {}, {}
+         ];
 
-        disc = BABYLON.MeshBuilder.CreateDisc("disc", {} ,  scene);
-        disc.position.x = BUTTON_ANSWER_X;
-        disc.position.y = BUTTON_ANSWER_Y;
-        disc.position.z = BUTTON_ANSWER_Z;
-        disc.id="answer1";
+    
 
-        disc.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
-        buttonList.player1.answer1.linkWithMesh(disc);
+        for (let  element = 0; element < HUD.player1.meshes.length; element++) {
+            HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
+            HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element;
+            HUD.player1.meshes[element].position.y = BUTTON_ANSWER_Y;
+            HUD.player1.meshes[element].position.z = BUTTON_ANSWER_Z;
+            HUD.player1.meshes[element].id= `answer${element}`;
+            HUD.player1.meshes[element].billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+        };
+
+        for (let  element = 0; element < HUD.player2.meshes.length; element++) {
+            HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
+            HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element - 6; //Magic number bs make const
+            HUD.player2.meshes[element].position.y = BUTTON_ANSWER_Y;
+            HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z;
+            HUD.player2.meshes[element].id= `P2answer${element}`;
+            HUD.player2.meshes[element].billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+        };
+        
+        
+       debugger;
+        
+        HUD.player1.answer1.linkWithMesh(HUD.player1.meshes[0]);
+        HUD.player1.answer2.linkWithMesh(HUD.player1.meshes[1]);
+        HUD.player1.answer3.linkWithMesh(HUD.player1.meshes[2]);
+
+        HUD.player2.answer1.linkWithMesh(HUD.player2.meshes[0]);
+        HUD.player2.answer2.linkWithMesh(HUD.player2.meshes[1]);
+        HUD.player2.answer3.linkWithMesh(HUD.player2.meshes[2]);
+
         // Built-in 'ground' shape.
-        const ground = BABYLON.MeshBuilder.CreateGround("ground", 
-            {width: 16, height: 12}, scene);
+        const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 16, height: 12}, scene);
         
         
         // debugger;
         buttonList.startGameButton.onPointerUpObservable.add(function() {
                 hideTitleScreen();
-                changeRound(1);
+                changeRound(1, HUD, true);
         });
 
         return scene;
@@ -113,16 +144,19 @@ export function init() {
                         console.log("KEY DOWN: ", kbInfo.event.key);
                         // Add the highlight layer.
                         
-                        hl.addMesh(disc, BABYLON.Color3.Green());
+                        hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
                         HUD.player1Score.text = Number(HUD.player1Score.text) + 1;
                             break;
                         case 'S':
                         case 's':
+
+                        hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
                         console.log("KEY DOWN: ", kbInfo.event.key);
                             break;
                         case 'D':
                         case 'd':
                         console.log("KEY DOWN: ", kbInfo.event.key);
+                        hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
                             break;
                         case 'ArrowLeft':
                         console.log("KEY DOWN: ", kbInfo.event.key);
@@ -132,16 +166,19 @@ export function init() {
                             break;
                         case 'ArrowRight':
                         console.log("KEY DOWN: ", kbInfo.event.key);
-                            break;
+                            break;a
 
                     }
             }
             else if (kbInfo.type == BABYLON.KeyboardEventTypes.KEYUP){
-                hl.removeMesh(disc);
+                HUD.player1.meshes.forEach(element => {
+                    hl.removeMesh(element);
+                });
+                // hl.removeMesh(HUD.player1.meshes[0]);
             }
         });
 
-        buttonList.player1.answer1.onPointerUpObservable.add(function(e) {
+        HUD.player1.answer1.onPointerUpObservable.add(function(e) {
                 console.log(e);
                 const pick = scene.pick(e.x, e.y);
                 console.log(advancedTexture.pick(e.x, e.y));
@@ -158,15 +195,23 @@ export function init() {
             
             buttonList.startGameButton.isVisible = false;
 
-            for (const button in buttonList.player1) {
-                buttonList.player1[button].isVisible = true;
+            for (const button in HUD.player1) {
+                HUD.player1[button].isVisible = true;
             }
-            for (const button in buttonList.player2) {
-                buttonList.player2[button].isVisible = true;
+            for (const button in HUD.player2) {
+                HUD.player2[button].isVisible = true;
             }
             HUD.question.isVisible = true;
-        
-        disc.material = textureObj.purple_mat;
+            
+            HUD.player1.meshes.forEach(element => {
+               element.material = textureObj.blue_mat;
+            });
+            debugger;
+            HUD.player2.meshes.forEach(element => {
+                element.material = textureObj.red_mat;
+             });
+            
+
     }
 
 
