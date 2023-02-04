@@ -1,10 +1,9 @@
-// let QuestionData;
-// let roundNumber;
-
 export class GameManager {
     constructor(){
         this.QuestionData;
         this.roundNumber;
+        this.player1IsLocked = false;
+        this.player2IsLocked = false;
     }
 
 
@@ -29,12 +28,11 @@ executeRoundSwap(HUD){
           }
     
           this.QuestionData[this.roundNumber].answers.forEach(q => {
-            // debugger;
-          this.QuestionData[this.roundNumber].answers.scramble()});
+             this.QuestionData[this.roundNumber].answers.scramble()
+            });
     
     
     
-        // debugger;
         HUD.question.text = this.QuestionData[this.roundNumber].problem;
     
         HUD.player1.answer1.text = this.QuestionData[this.roundNumber].answers[0];
@@ -45,7 +43,6 @@ executeRoundSwap(HUD){
     
         HUD.player1.answer3.text = this.QuestionData[this.roundNumber].answers[2];
         HUD.player2.answer3.text = this.QuestionData[this.roundNumber].answers[0];
-    
     
         HUD.correctAnswer = this.QuestionData[this.roundNumber].correctAnswer;
     
@@ -66,32 +63,40 @@ executeRoundSwap(HUD){
         this.roundNumber = number;
         if(shouldILoadData){
             this.loadQuestionData(HUD);
-            // debugger;
-            // console.log(QuestionData);
         }else {
             //Skip fetching and use data that's present
-            debugger;
             this.executeRoundSwap(HUD);
         }
     
     }
     
-    checkForCorrectAnswer(playerScore, playersAnswer, HUD){
+    checkForCorrectAnswer(playerScore, playersAnswer, HUD, whichPlayer){
         if(Number(playersAnswer) === HUD.correctAnswer){
             this.changeRound(this.roundNumber + 1, HUD);
             return Number(playerScore) + 1;
             
         }else {
             console.log("%cWrong Answer!!!", "color:red");
+            this.lockOutInputTemporarily(whichPlayer);
             return Number(playerScore);
         }
-    
     }
 
 
-    lockOutInputTemporarily(){
+    lockOutInputTemporarily(whichPlayer){
         const time = 3000;
-
+        if(whichPlayer === 'player1') {
+            this.player1IsLocked = true;
+            setTimeout(() => {
+                this.player1IsLocked = false;
+            }, time);
+        }else if(whichPlayer === 'player2') {
+            this.player2IsLocked = true;
+            setTimeout(() => {
+                this.player2IsLocked = false;
+            }, time);
+        }
+     
     }
 
 

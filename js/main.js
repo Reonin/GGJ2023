@@ -49,6 +49,7 @@ export function init() {
     let disc;
     let textureObj;
     const gameManager = new GameManager();
+
     const createScene = async function () {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
@@ -82,6 +83,7 @@ export function init() {
         // Move the sphere upward 1/2 its height
         sphere.material = textureObj.stone_texture;
 
+       
         HUD.player1.meshes = [
            {}, {}, {}
         ];
@@ -89,8 +91,6 @@ export function init() {
         HUD.player2.meshes = [
             {}, {}, {}
          ];
-
-    
 
         for (let  element = 0; element < HUD.player1.meshes.length; element++) {
             HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
@@ -147,38 +147,50 @@ export function init() {
                         case 'A':
                         case 'a':
                         console.log("KEY DOWN: ", kbInfo.event.key);
-                        // Add the highlight layer.
-                        
-                        hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
-                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD);
+                        if(!gameManager.player1IsLocked){
+                             // Add the highlight layer.
+                            hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
+                            HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD, 'player1');
+                        }
                             break;
                         case 'S':
                         case 's':
-                        hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
-                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD);
-                        console.log("KEY DOWN: ", kbInfo.event.key);
+                            if(!gameManager.player1IsLocked){
+                                hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
+                                HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD, 'player1');
+                                console.log("KEY DOWN: ", kbInfo.event.key);
+                            }
                             break;
                         case 'D':
                         case 'd':
-                        console.log("KEY DOWN: ", kbInfo.event.key);
-                        hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
-                        HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD);
+                            if(!gameManager.player1IsLocked){
+                                console.log("KEY DOWN: ", kbInfo.event.key);
+                                hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
+                                HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD, 'player1');
+                            }
                             break;
                         
                         case 'ArrowLeft':
-                        console.log("KEY DOWN: ", kbInfo.event.key);
-                        hl.addMesh(HUD.player2.meshes[0], BABYLON.Color3.Green());
-                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD);
+                            if(!gameManager.player2IsLocked){
+                                console.log("KEY DOWN: ", kbInfo.event.key);
+                                hl.addMesh(HUD.player2.meshes[0], BABYLON.Color3.Green());
+                                HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD, 'player2');
+                            }
+                        
                             break;
                         case 'ArrowUp':
-                        console.log("KEY DOWN: ", kbInfo.event.key);
-                        hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
-                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD);
+                            if(!gameManager.player2IsLocked){
+                                console.log("KEY DOWN: ", kbInfo.event.key);
+                                hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
+                                HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD, 'player2');
+                            }
                             break;
                         case 'ArrowRight':
-                        console.log("KEY DOWN: ", kbInfo.event.key);
-                        hl.addMesh(HUD.player2.meshes[2], BABYLON.Color3.Green());
-                        HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD);
+                            if(!gameManager.player2IsLocked){
+                                console.log("KEY DOWN: ", kbInfo.event.key);
+                                hl.addMesh(HUD.player2.meshes[2], BABYLON.Color3.Green());
+                                HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD, 'player2');
+                            }
                             break;
 
                     }
@@ -221,7 +233,6 @@ export function init() {
             HUD.player1.meshes.forEach(element => {
                element.material = textureObj.blue_mat;
             });
-            // debugger;
             HUD.player2.meshes.forEach(element => {
                 element.material = textureObj.red_mat;
              });
