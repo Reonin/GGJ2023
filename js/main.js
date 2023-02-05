@@ -78,11 +78,27 @@ export function init() {
         // HUD.question.isVisible = false;
         
 
-        // Built-in 'sphere' shape.
-        const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", 
-        {diameter: 2, segments: 32}, scene);
+        // // Built-in 'sphere' shape.
+        // const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", 
+        // {diameter: 2, segments: 32}, scene);
         // Move the sphere upward 1/2 its height
-        sphere.material = textureObj.stone_texture;
+        // sphere.material = textureObj.stone_texture;
+
+        // BABYLON.SceneLoader.Append("./models/", "pistachio.obj", scene, function (scene) {
+        //     // do something with the scene
+        // });
+
+        const assetsManager = new BABYLON.AssetsManager(scene);
+        const meshTask = assetsManager.addMeshTask('seed task', '', './models/', 'pistachio.obj');
+        meshTask.onSuccess = (task) => {
+            const seedMesh = task.loadedMeshes[0];
+            // Do something with the mesh here
+            seedMesh.position.x = 0;
+            seedMesh.position.y = 1;
+            seedMesh.position.z = 0;
+            seedMesh.material = textureObj.purple_mat;
+        }
+        assetsManager.load();
 
        
         HUD.player1.meshes = [
@@ -133,7 +149,15 @@ export function init() {
           });
 
         // Built-in 'ground' shape.
-        const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 16, height: 12}, scene);
+        const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 20, height: 14}, scene);
+        // Built-in 'ground' shape.
+        const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
+        sky.material = textureObj.blue_mat;
+        sky.position.y = 1;
+        sky.position.z = -4.5;
+
+
+        ground.material = textureObj.brown_mat;
         
         
         // debugger;

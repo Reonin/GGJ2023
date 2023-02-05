@@ -18,5 +18,15 @@
             3
         ],
         "difficulty": "easy"
+    },
+    "3": {
+        "problem": "What is the Square root of 1?",
+        "correctAnswer": -1,
+        "answers": [
+            -1, 
+            0,
+            0.3
+        ],
+        "difficulty": "medium"
     }
 }

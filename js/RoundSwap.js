@@ -2,8 +2,8 @@ export class GameManager {
     constructor(){
         this.QuestionData;
         this.roundNumber;
-        this.player1IsLocked = false;
-        this.player2IsLocked = false;
+        this.player1IsLocked = true;
+        this.player2IsLocked = true;
     }
 
 
@@ -60,6 +60,9 @@ executeRoundSwap(HUD){
     
     changeRound(number, HUD, shouldILoadData = false){
         console.log(number);
+        this.player1IsLocked = false;
+        this.player2IsLocked = false;
+
         this.roundNumber = number;
         if(shouldILoadData){
             this.loadQuestionData(HUD);

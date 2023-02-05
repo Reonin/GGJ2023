@@ -15,6 +15,9 @@ export default function loadAssets(BABYLON, scene){
     const red_mat = new BABYLON.StandardMaterial("red_mat", scene);
     red_mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
 
-    const textureObj = {stone_texture, purple_mat, blue_mat, red_mat};
+    const brown_mat = new BABYLON.StandardMaterial("brown_mat", scene);
+    brown_mat.diffuseColor = new BABYLON.Color3(0.306,0.157,0.016);
+
+    const textureObj = {stone_texture, purple_mat, blue_mat, red_mat, brown_mat};
 return textureObj;
 }
