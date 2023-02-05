@@ -95,13 +95,14 @@ export function init() {
         // });
 
         const assetsManager = new BABYLON.AssetsManager(scene);
-        const meshTask = assetsManager.addMeshTask('seed task', '', './models/', 'pistachio.obj');
+        const meshTask = assetsManager.addMeshTask('seed task', '', './models/', 'pistachio.glb');
         meshTask.onSuccess = (task) => {
             const seedMesh = task.loadedMeshes[0];
             // Do something with the mesh here
             seedMesh.position.x = 0;
             seedMesh.position.y = 1;
             seedMesh.position.z = 0;
+            // seedMesh.rotationQuaternion.x = Math.PI/2;
             seedMesh.material = textureObj.purple_mat;
         }
         assetsManager.load();
@@ -212,6 +213,14 @@ export function init() {
 
             linesystem2 = BABYLON.MeshBuilder.CreateLineSystem("linesystem2", {lines: p2Roots, updatable: true}, scene); 
             linesystem2.color = new BABYLON.Color3(0.824,0.706,0.549);
+
+            linesystem.enableEdgesRendering();	
+            linesystem.edgesWidth = 3;
+            linesystem.edgesColor = new BABYLON.Color4(0.824,0.706,0.549, 1);
+
+            linesystem2.enableEdgesRendering();	
+            linesystem2.edgesWidth = 3;
+            linesystem2.edgesColor = new BABYLON.Color4(0.824,0.706,0.549, 1);
         //    debugger;
         });
         
@@ -283,10 +292,10 @@ export function init() {
         // Built-in 'ground' shape.
         const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 20, height: 14}, scene);
         // Built-in 'ground' shape.
-        const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
-        sky.material = textureObj.blue_mat;
-        sky.position.y = 0.1;
-        sky.position.z = -5.0;
+        // const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
+        // sky.material = textureObj.blue_mat;
+        // sky.position.y = 0.1;
+        // sky.position.z = -5.0;
 
 
         ground.material = textureObj.soil_texture;
