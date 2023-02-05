@@ -67,7 +67,7 @@ export function init() {
         // camera.attachControl(canvas, true);
         // Creates a light, aiming 0,1,0 - to the sky
         const light = new BABYLON.HemisphericLight("light", 
-            new BABYLON.Vector3(0, 1, 0), scene);
+            new BABYLON.Vector3(0, 1, -0.400), scene);
         // Dim the light a small amount - 0 to 1
         light.intensity = 0.5;
         
@@ -286,11 +286,12 @@ export function init() {
         const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
         sky.material = textureObj.blue_mat;
         sky.position.y = 0.1;
-        sky.position.z = -4.5;
+        sky.position.z = -5.0;
 
 
-        ground.material = textureObj.brown_mat;
-        
+        ground.material = textureObj.soil_texture;
+        ground.material.diffuseTexture.wAng = Math.PI;
+        ground.position.z = 1;
         
         // debugger;
         buttonList.startGameButton.onPointerUpObservable.add(function() {

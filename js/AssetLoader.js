@@ -2,7 +2,6 @@ export default function loadAssets(BABYLON, scene){
     // BABYLON.SceneLoader.ImportMesh("", Assets.meshes.pirateFort.rootUrl, Assets.meshes.pirateFort.filename, scene)
    
     const stone_texture = new BABYLON.StandardMaterial("stone", scene);
-
     stone_texture.diffuseTexture = new BABYLON.Texture("../textures/stoneso.png", scene);
 
 
@@ -18,6 +17,9 @@ export default function loadAssets(BABYLON, scene){
     const brown_mat = new BABYLON.StandardMaterial("brown_mat", scene);
     brown_mat.diffuseColor = new BABYLON.Color3(0.306,0.157,0.016);
 
-    const textureObj = {stone_texture, purple_mat, blue_mat, red_mat, brown_mat};
+    const soil_texture = new BABYLON.StandardMaterial("soil", scene);
+    soil_texture.diffuseTexture = new BABYLON.Texture("../textures/soilCross.png", scene);
+
+    const textureObj = {stone_texture, purple_mat, blue_mat, red_mat, brown_mat, soil_texture};
 return textureObj;
 }
