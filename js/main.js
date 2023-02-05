@@ -3,6 +3,7 @@ import setUpButtons from './buttonConfig.js';
 import setUpHUD from './HUDConfig.js';
 import loadAssets from './AssetLoader.js';
 import { GameManager } from './RoundSwap.js';
+import { AudioManager } from './AudioManager.js';
 
 // import {changeRound, checkForCorrectAnswer} from './RoundSwap.js';
 export function init() {
@@ -50,7 +51,7 @@ export function init() {
     let disc;
     let textureObj;
     const gameManager = new GameManager();
-
+    let audioManager;
     const createScene = async function () {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
@@ -75,6 +76,9 @@ export function init() {
         textureObj = loadAssets(BABYLON, scene);
         setUpButtons(advancedTexture, buttonList);
         setUpHUD(advancedTexture, HUD);
+        audioManager = new AudioManager(BABYLON, scene);
+
+        audioManager.loadSounds();
         // HUD.question.isVisible = false;
         
 
@@ -143,12 +147,13 @@ export function init() {
          // Set a direction flag for the animation
      
          // Code in this function will run ~60 times per second
-         const directionArr1 = [true, true, true];
-         const directionArr2= [true, true, true];
+        const directionArr1 = [true, true, true];
+        const directionArr2= [true, true, true];
         scene.registerBeforeRender( () => {
 
             HUD.player1.meshes.forEach( (but, index) => {
-               
+                let oldVal = directionArr1[index];
+
                  // Check if box is moving up
                 if (but.position.z < BUTTON_ANSWER_Z + 0.5 && directionArr1[index]) {
                     // Increment box position to the up
@@ -157,6 +162,7 @@ export function init() {
                 else {
                     // Swap directions to move down
                     directionArr1[index] = false;
+                   
                 }
                 // Check if box is moving down
                 if (but.position.z > BUTTON_ANSWER_Z - 0.5 && !directionArr1[index]) {
@@ -167,10 +173,14 @@ export function init() {
                     // Swap directions to move up
                     directionArr1[index] = true;
                 }
+
+                if((oldVal !== directionArr1[index]) && (gameManager.roundNumber > 0)){
+                    audioManager.softFX.play();
+                }
             });
-            var direction = true;
+          
             HUD.player2.meshes.forEach( (but, index) => {
-                
+                // let oldVal = directionArr1[index];
                 // Check if box is moving up
                if (but.position.z < BUTTON_ANSWER_Z + 0.5 && directionArr2[index]) {
                    // Increment box position to the up
@@ -189,6 +199,10 @@ export function init() {
                    // Swap directions to move up
                    directionArr2[index] = true;
                }
+
+            //    if((oldVal !== directionArr1[index]) && (gameManager.roundNumber > 0)){
+            //     audioManager.softFX.play();
+            //   }
            });
            
         });
