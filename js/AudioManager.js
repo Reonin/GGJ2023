@@ -16,11 +16,13 @@ loadSounds(){
       this.softFX = new this.BABYLON.Sound("snd", "./audio/snd_fragment.mp3", this.scene, null, {
         loop: false,
         autoplay: false,
+        volume: 0.35,
       });
 
       this.warmPiano = new this.BABYLON.Sound("WarmPiano", "./audio/warm-piano.mp3", this.scene, null, {
         loop: true,
         autoplay: true,
+        volume: 0.8,
       });
 }
 

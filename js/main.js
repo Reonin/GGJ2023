@@ -368,7 +368,7 @@ export function init() {
                             }
                         
                             break;
-                        case 'ArrowUp':
+                        case 'ArrowDown':
                             if(!gameManager.player2IsLocked){
                                 console.log("KEY DOWN: ", kbInfo.event.key);
                                 hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
