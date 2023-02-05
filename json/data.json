@@ -20,6 +20,16 @@
         "difficulty": "easy"
     },
     "3": {
+        "problem": "What is the Square root of 25?",
+        "correctAnswer": 5,
+        "answers": [
+            5, 
+            6,
+            4
+        ],
+        "difficulty": "easy"
+    },
+    "4": {
         "problem": "What is the Square root of 1?",
         "correctAnswer": -1,
         "answers": [
@@ -29,7 +39,7 @@
         ],
         "difficulty": "medium"
     },
-    "4": {
+    "5": {
         "problem": "What is the Square root of 6?",
         "correctAnswer": 2.449,
         "answers": [
@@ -39,7 +49,7 @@
         ],
         "difficulty": "medium"
     },
-    "5": {
+    "6": {
         "problem": "What is the Square root of 25?",
         "correctAnswer": -5,
         "answers": [
@@ -48,5 +58,45 @@
             5.5
         ],
         "difficulty": "medium"
+    },
+    "7": {
+        "problem": "What is the Square root of 36?",
+        "correctAnswer": -6,
+        "answers": [
+            6.6, 
+            -6,
+            3
+        ],
+        "difficulty": "medium"
+    },
+    "8": {
+        "problem": "What is the Cubic root of 27?",
+        "correctAnswer": 3,
+        "answers": [
+            3, 
+            9,
+            5
+        ],
+        "difficulty": "medium"
+    },
+    "9": {
+        "problem": "What is the Cubic root of 64?",
+        "correctAnswer": 4,
+        "answers": [
+            8, 
+            4,
+            6
+        ],
+        "difficulty": "medium"
+    },
+    "10": {
+        "problem": "What is the Cubic root of -27?",
+        "correctAnswer": -3,
+        "answers": [
+            -3, 
+            3,
+            9
+        ],
+        "difficulty": "hard"
     }
 }

@@ -44,14 +44,16 @@ export function init() {
         question,
         currentRound,
     }
-    let answer1;
-    let answer2;
-    let answer3;
 
-    let disc;
     let textureObj;
     const gameManager = new GameManager();
     let audioManager;
+
+    let p1Roots;
+    let p1FullPaths;
+    let p2Roots;
+    let p2FullPaths;
+
     const createScene = async function () {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
@@ -67,7 +69,7 @@ export function init() {
         const light = new BABYLON.HemisphericLight("light", 
             new BABYLON.Vector3(0, 1, 0), scene);
         // Dim the light a small amount - 0 to 1
-        light.intensity = 0.7;
+        light.intensity = 0.5;
         
         //GUI
         advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene, BABYLON.Texture.NEAREST_NEAREST);
@@ -104,8 +106,6 @@ export function init() {
         }
         assetsManager.load();
 
-  
-       
         HUD.player1.meshes = [
            {}, {}, {}
         ];
@@ -115,8 +115,8 @@ export function init() {
          ];
 
         for (let  element = 0; element < HUD.player1.meshes.length; element++) {
-            HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
-            HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2;
+            HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {radius:0.3} ,  scene);
+            HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.15;
             HUD.player1.meshes[element].position.y = BUTTON_ANSWER_Y;
             HUD.player1.meshes[element].position.z = BUTTON_ANSWER_Z - (element * 0.25);
             HUD.player1.meshes[element].id= `answer${element}`;
@@ -124,7 +124,7 @@ export function init() {
         };
 
         for (let  element = 0; element < HUD.player2.meshes.length; element++) {
-            HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
+            HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {radius:0.3} ,  scene);
             HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2 - 5.4; //Magic number bs make const
             HUD.player2.meshes[element].position.y = BUTTON_ANSWER_Y;
             HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z - (element * 0.25);
@@ -143,12 +143,14 @@ export function init() {
         HUD.player2.answer3.linkWithMesh(HUD.player2.meshes[2]);
 
 
-        // const but = HUD.player1.meshes[0];
-         // Set a direction flag for the animation
      
          // Code in this function will run ~60 times per second
         const directionArr1 = [true, true, true];
         const directionArr2= [true, true, true];
+
+        
+        let linesystem;
+        let linesystem2;
         scene.registerBeforeRender( () => {
 
             HUD.player1.meshes.forEach( (but, index) => {
@@ -200,13 +202,74 @@ export function init() {
                    directionArr2[index] = true;
                }
 
-            //    if((oldVal !== directionArr1[index]) && (gameManager.roundNumber > 0)){
-            //     audioManager.softFX.play();
-            //   }
            });
-           
+            if(linesystem){
+                linesystem.dispose();
+                linesystem2.dispose();
+            }
+            linesystem = BABYLON.MeshBuilder.CreateLineSystem("linesystem", {lines: p1Roots, updatable: true}, scene); 
+            linesystem.color = new BABYLON.Color3(0.824,0.706,0.549);
+
+            linesystem2 = BABYLON.MeshBuilder.CreateLineSystem("linesystem2", {lines: p2Roots, updatable: true}, scene); 
+            linesystem2.color = new BABYLON.Color3(0.824,0.706,0.549);
+        //    debugger;
         });
-    
+        
+        p1Roots = [
+            [ 	new BABYLON.Vector3(0, 1, 0),
+                new BABYLON.Vector3(0, 1, 1) //init
+            ]
+        ];
+
+        p1FullPaths =[  
+        [ 	new BABYLON.Vector3(0, 1, 0),
+            new BABYLON.Vector3(0, 1, 1) //init
+        ],
+        [
+            new BABYLON.Vector3(0, 1, 1),
+            new BABYLON.Vector3(1, 1, 1.5), //diag
+        ],
+        [	new BABYLON.Vector3(1, 1, 1.5),
+            new BABYLON.Vector3(6.5, 1, 1.5), //left
+        ],
+        [	new BABYLON.Vector3(6.5, 1, 1.5),
+            new BABYLON.Vector3(6.5, 1, 5.5),//down
+        ],
+        [	new BABYLON.Vector3(6.5, 1, 5.5),
+            new BABYLON.Vector3(2, 1, 5.5), //right
+        ],
+        [	new BABYLON.Vector3(2, 1, 5.5),
+            new BABYLON.Vector3(2, 1, 1.5), //up
+        ]];
+
+        p2Roots = [
+            [ 	new BABYLON.Vector3(0, 1, 0),
+                new BABYLON.Vector3(0, 1, 1) //init
+            ]
+        ];
+
+        p2FullPaths =[  
+            [ 	new BABYLON.Vector3(0, 1, 0),
+                new BABYLON.Vector3(0, 1, 1) //init
+            ],
+            [
+                new BABYLON.Vector3(0, 1, 1),
+                new BABYLON.Vector3(-1, 1, 1.5), //diag
+            ],
+            [	new BABYLON.Vector3(-1, 1, 1.5),
+                new BABYLON.Vector3(-6.5, 1, 1.5), //left
+            ],
+            [	new BABYLON.Vector3(-6.5, 1, 1.5),
+                new BABYLON.Vector3(-6.5, 1, 5.5),//down
+            ],
+            [	new BABYLON.Vector3(-6.5, 1, 5.5),
+                new BABYLON.Vector3(-2, 1, 5.5), //right
+            ],
+            [	new BABYLON.Vector3(-2, 1, 5.5),
+                new BABYLON.Vector3(-2, 1, 1.5), //up
+            ]];
+       
+
 
 
 
@@ -252,11 +315,18 @@ export function init() {
                         case 'A':
                         case 'a':
                         console.log("KEY DOWN: ", kbInfo.event.key);
-                        if(!gameManager.player1IsLocked){
-                             // Add the highlight layer.
-                            hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
-                            HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD, 'player1');
-                        }
+                       
+                            if(!gameManager.player1IsLocked){
+                                // Add the highlight layer.
+                                hl.addMesh(HUD.player1.meshes[0], BABYLON.Color3.Green());
+                                HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer1.text, HUD, 'player1');
+                                if(HUD.player1Score.text < p1FullPaths.length){
+                                    p1Roots.push(p1FullPaths[HUD.player1Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player one wins!"
+                                }
+                               
+                            }
                             break;
                         case 'S':
                         case 's':
@@ -264,6 +334,11 @@ export function init() {
                                 hl.addMesh(HUD.player1.meshes[1], BABYLON.Color3.Green());
                                 HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer2.text, HUD, 'player1');
                                 console.log("KEY DOWN: ", kbInfo.event.key);
+                                if(HUD.player1Score.text < p1FullPaths.length){
+                                    p1Roots.push(p1FullPaths[HUD.player1Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player one wins!"
+                                }
                             }
                             break;
                         case 'D':
@@ -272,6 +347,11 @@ export function init() {
                                 console.log("KEY DOWN: ", kbInfo.event.key);
                                 hl.addMesh(HUD.player1.meshes[2], BABYLON.Color3.Green());
                                 HUD.player1Score.text = gameManager.checkForCorrectAnswer(HUD.player1Score.text, HUD.player1.answer3.text, HUD, 'player1');
+                                if(HUD.player1Score.text < p1FullPaths.length){
+                                    p1Roots.push(p1FullPaths[HUD.player1Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player one wins!"
+                                }
                             }
                             break;
                         
@@ -280,6 +360,11 @@ export function init() {
                                 console.log("KEY DOWN: ", kbInfo.event.key);
                                 hl.addMesh(HUD.player2.meshes[0], BABYLON.Color3.Green());
                                 HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer1.text, HUD, 'player2');
+                                if(HUD.player2Score.text < p2FullPaths.length){
+                                    p2Roots.push(p2FullPaths[HUD.player2Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player two wins!"
+                                }
                             }
                         
                             break;
@@ -288,6 +373,11 @@ export function init() {
                                 console.log("KEY DOWN: ", kbInfo.event.key);
                                 hl.addMesh(HUD.player2.meshes[1], BABYLON.Color3.Green());
                                 HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer2.text, HUD, 'player2');
+                                if(HUD.player2Score.text < p2FullPaths.length){
+                                    p2Roots.push(p2FullPaths[HUD.player2Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player two wins!"
+                                }
                             }
                             break;
                         case 'ArrowRight':
@@ -295,6 +385,11 @@ export function init() {
                                 console.log("KEY DOWN: ", kbInfo.event.key);
                                 hl.addMesh(HUD.player2.meshes[2], BABYLON.Color3.Green());
                                 HUD.player2Score.text = gameManager.checkForCorrectAnswer(HUD.player2Score.text, HUD.player2.answer3.text, HUD, 'player2');
+                                if(HUD.player2Score.text < p2FullPaths.length){
+                                    p2Roots.push(p2FullPaths[HUD.player2Score.text]); 
+                                }else {
+                                    HUD.question.text = "Player two wins!"
+                                }
                             }
                             break;
 

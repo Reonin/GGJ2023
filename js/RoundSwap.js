@@ -9,7 +9,7 @@ export class GameManager {
 
 executeRoundSwap(HUD){
     
-        console.log(this.QuestionData);
+        // console.log(this.QuestionData);
     
         if (!("scramble" in Array.prototype)) {
             Object.defineProperty(Array.prototype, "scramble", {
