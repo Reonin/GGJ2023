@@ -28,5 +28,25 @@
             0.3
         ],
         "difficulty": "medium"
+    },
+    "4": {
+        "problem": "What is the Square root of 6?",
+        "correctAnswer": 2.449,
+        "answers": [
+            2.449, 
+            3,
+            2.3
+        ],
+        "difficulty": "medium"
+    },
+    "5": {
+        "problem": "What is the Square root of 25?",
+        "correctAnswer": -5,
+        "answers": [
+            -5, 
+            4.5,
+            5.5
+        ],
+        "difficulty": "medium"
     }
 }

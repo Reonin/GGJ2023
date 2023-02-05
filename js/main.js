@@ -100,6 +100,7 @@ export function init() {
         }
         assetsManager.load();
 
+  
        
         HUD.player1.meshes = [
            {}, {}, {}
@@ -113,7 +114,7 @@ export function init() {
             HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
             HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2;
             HUD.player1.meshes[element].position.y = BUTTON_ANSWER_Y;
-            HUD.player1.meshes[element].position.z = BUTTON_ANSWER_Z;
+            HUD.player1.meshes[element].position.z = BUTTON_ANSWER_Z - (element * 0.25);
             HUD.player1.meshes[element].id= `answer${element}`;
             HUD.player1.meshes[element].billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
         };
@@ -122,7 +123,7 @@ export function init() {
             HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
             HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2 - 5.4; //Magic number bs make const
             HUD.player2.meshes[element].position.y = BUTTON_ANSWER_Y;
-            HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z;
+            HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z - (element * 0.25);
             HUD.player2.meshes[element].id= `P2answer${element}`;
             HUD.player2.meshes[element].billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
         };
@@ -137,6 +138,60 @@ export function init() {
         HUD.player2.answer2.linkWithMesh(HUD.player2.meshes[1]);
         HUD.player2.answer3.linkWithMesh(HUD.player2.meshes[2]);
 
+
+        // const but = HUD.player1.meshes[0];
+         // Set a direction flag for the animation
+     
+         // Code in this function will run ~60 times per second
+         const directionArr1 = [true, true, true];
+         const directionArr2= [true, true, true];
+        scene.registerBeforeRender( () => {
+
+            HUD.player1.meshes.forEach( (but, index) => {
+               
+                 // Check if box is moving up
+                if (but.position.z < BUTTON_ANSWER_Z + 0.5 && directionArr1[index]) {
+                    // Increment box position to the up
+                    but.position.z += 0.0125;
+                }
+                else {
+                    // Swap directions to move down
+                    directionArr1[index] = false;
+                }
+                // Check if box is moving down
+                if (but.position.z > BUTTON_ANSWER_Z - 0.5 && !directionArr1[index]) {
+                    // Decrement box position to the down
+                    but.position.z -= 0.0125;
+                }
+                else {
+                    // Swap directions to move up
+                    directionArr1[index] = true;
+                }
+            });
+            var direction = true;
+            HUD.player2.meshes.forEach( (but, index) => {
+                
+                // Check if box is moving up
+               if (but.position.z < BUTTON_ANSWER_Z + 0.5 && directionArr2[index]) {
+                   // Increment box position to the up
+                   but.position.z += 0.0125;
+               }
+               else {
+                   // Swap directions to move down
+                   directionArr2[index] = false;
+               }
+               // Check if box is moving down
+               if (but.position.z > BUTTON_ANSWER_Z - 0.5 && !directionArr2[index]) {
+                   // Decrement box position to the down
+                   but.position.z -= 0.0125;
+               }
+               else {
+                   // Swap directions to move up
+                   directionArr2[index] = true;
+               }
+           });
+           
+        });
     
 
 
@@ -153,7 +208,7 @@ export function init() {
         // Built-in 'ground' shape.
         const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
         sky.material = textureObj.blue_mat;
-        sky.position.y = 1;
+        sky.position.y = 0.1;
         sky.position.z = -4.5;
 
 
