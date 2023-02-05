@@ -7,8 +7,6 @@ export default function setUpHUD(advancedTexture, HUD){
     HUD.subtitle = advancedTexture.getControlByName("Subtitle");
     HUD.question = advancedTexture.getControlByName("Question");
 
-    HUD.question.isVisible = false;
-
     /**player 1 controls**/
     HUD.player1.answer1 = advancedTexture.getControlByName("Answer1");
     HUD.player1.answer1.onPointerUpObservable.add(function() {
@@ -41,11 +39,13 @@ export default function setUpHUD(advancedTexture, HUD){
         console.log("%cPlayer 1 Button 3 Pressed", "color:red");
     });
 
-    for (const button in HUD.player1) {
-        HUD.player1[button].isVisible = false;
-    }
-    for (const button in HUD.player2) {
-        HUD.player2[button].isVisible = false;
-    }
+    //     HUD.question.isVisible = false;
+
+    // for (const button in HUD.player1) {
+    //     HUD.player1[button].isVisible = false;
+    // }
+    // for (const button in HUD.player2) {
+    //     HUD.player2[button].isVisible = false;
+    // }
     
 }

@@ -9,6 +9,7 @@ export function init() {
    
     const canvas = document.getElementById("renderCanvas"); // Get the canvas element
     const engine = new BABYLON.Engine(canvas, true ,{ stencil: true }); // Generate the BABYLON 3D engine
+
     let advancedTexture;
     let startGameButton;
     let player1 = {};
@@ -68,13 +69,13 @@ export function init() {
         light.intensity = 0.7;
         
         //GUI
-        advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
+        advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene, BABYLON.Texture.NEAREST_NEAREST);
         let loadedGUI = await advancedTexture.parseFromURLAsync("./json/guiTexture.json");
 
         textureObj = loadAssets(BABYLON, scene);
         setUpButtons(advancedTexture, buttonList);
         setUpHUD(advancedTexture, HUD);
-        HUD.question.isVisible = false;
+        // HUD.question.isVisible = false;
         
 
         // Built-in 'sphere' shape.
@@ -94,7 +95,7 @@ export function init() {
 
         for (let  element = 0; element < HUD.player1.meshes.length; element++) {
             HUD.player1.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
-            HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element;
+            HUD.player1.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2;
             HUD.player1.meshes[element].position.y = BUTTON_ANSWER_Y;
             HUD.player1.meshes[element].position.z = BUTTON_ANSWER_Z;
             HUD.player1.meshes[element].id= `answer${element}`;
@@ -103,7 +104,7 @@ export function init() {
 
         for (let  element = 0; element < HUD.player2.meshes.length; element++) {
             HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {} ,  scene);
-            HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element - 6; //Magic number bs make const
+            HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2 - 5.4; //Magic number bs make const
             HUD.player2.meshes[element].position.y = BUTTON_ANSWER_Y;
             HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z;
             HUD.player2.meshes[element].id= `P2answer${element}`;
@@ -119,6 +120,17 @@ export function init() {
         HUD.player2.answer1.linkWithMesh(HUD.player2.meshes[0]);
         HUD.player2.answer2.linkWithMesh(HUD.player2.meshes[1]);
         HUD.player2.answer3.linkWithMesh(HUD.player2.meshes[2]);
+
+    
+
+
+
+        HUD.player1.meshes.forEach(element => {
+            element.material = textureObj.blue_mat;
+         });
+         HUD.player2.meshes.forEach(element => {
+             element.material = textureObj.red_mat;
+          });
 
         // Built-in 'ground' shape.
         const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 16, height: 12}, scene);
@@ -222,20 +234,15 @@ export function init() {
             
             buttonList.startGameButton.isVisible = false;
 
-            for (const button in HUD.player1) {
-                HUD.player1[button].isVisible = true;
-            }
-            for (const button in HUD.player2) {
-                HUD.player2[button].isVisible = true;
-            }
-            HUD.question.isVisible = true;
+            // for (const button in HUD.player1) {
+            //     HUD.player1[button].isVisible = true;
+            // }
+            // for (const button in HUD.player2) {
+            //     HUD.player2[button].isVisible = true;
+            // }
+            // HUD.question.isVisible = true;
             
-            HUD.player1.meshes.forEach(element => {
-               element.material = textureObj.blue_mat;
-            });
-            HUD.player2.meshes.forEach(element => {
-                element.material = textureObj.red_mat;
-             });
+           
             
 
     }
