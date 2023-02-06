@@ -48,9 +48,19 @@ export class GameManager {
 
     }
 
+    
     async loadQuestionData(HUD) {
+        let hostPath;
+
+        if(location.hostname === "localhost"){
+            hostPath = '/GGJ2023/';
+        }
+        else {
+            hostPath = '../';
+        }
+
         try {
-            const response = await fetch('../json/data.json');
+            const response = await fetch(hostPath + 'json/data.json');
             this.QuestionData = await response.json();
             this.executeRoundSwap(HUD);
         } catch (error) {
