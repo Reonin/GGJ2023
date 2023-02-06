@@ -5,6 +5,7 @@ export class AudioManager {
         this.pingFX;
         this.softFX;
         this.warmPiano;
+        this.error;
     }
 
 loadSounds(){
@@ -16,13 +17,19 @@ loadSounds(){
       this.softFX = new this.BABYLON.Sound("snd", "./audio/snd_fragment.mp3", this.scene, null, {
         loop: false,
         autoplay: false,
-        volume: 0.35,
+        volume: 0.15,
       });
 
       this.warmPiano = new this.BABYLON.Sound("WarmPiano", "./audio/warm-piano.mp3", this.scene, null, {
         loop: true,
         autoplay: true,
-        volume: 0.8,
+        volume: 0.3,
+      });
+
+      this.error = new this.BABYLON.Sound("error", "./audio/error.mp3", this.scene, null, {
+        loop: false,
+        autoplay: false,
+        volume: 1.0,
       });
 }
 

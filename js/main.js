@@ -6,6 +6,7 @@ import { GameManager } from './RoundSwap.js';
 import { AudioManager } from './AudioManager.js';
 
 // import {changeRound, checkForCorrectAnswer} from './RoundSwap.js';
+let audioManager;
 export function init() {
    
     const canvas = document.getElementById("renderCanvas"); // Get the canvas element
@@ -47,7 +48,7 @@ export function init() {
 
     let textureObj;
     const gameManager = new GameManager();
-    let audioManager;
+ 
 
     let p1Roots;
     let p1FullPaths;
@@ -337,6 +338,10 @@ export function init() {
                                 }
                                
                             }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
+                            }
                             break;
                         case 'S':
                         case 's':
@@ -349,6 +354,10 @@ export function init() {
                                 }else {
                                     HUD.question.text = "Player one wins!"
                                 }
+                            }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
                             }
                             break;
                         case 'D':
@@ -363,6 +372,10 @@ export function init() {
                                     HUD.question.text = "Player one wins!"
                                 }
                             }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
+                            }
                             break;
                         
                         case 'ArrowLeft':
@@ -375,6 +388,10 @@ export function init() {
                                 }else {
                                     HUD.question.text = "Player two wins!"
                                 }
+                            }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
                             }
                         
                             break;
@@ -389,6 +406,10 @@ export function init() {
                                     HUD.question.text = "Player two wins!"
                                 }
                             }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
+                            }
                             break;
                         case 'ArrowRight':
                             if(!gameManager.player2IsLocked){
@@ -400,6 +421,10 @@ export function init() {
                                 }else {
                                     HUD.question.text = "Player two wins!"
                                 }
+                            }
+                            else{
+                                audioManager.error.stop();
+                                audioManager.error.play();
                             }
                             break;
 
