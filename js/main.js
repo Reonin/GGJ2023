@@ -55,6 +55,12 @@ export function init() {
     let p2Roots;
     let p2FullPaths;
 
+    let seed0;
+    let seed1;
+    let seed2;
+    let seed3;
+    let seed4;
+
     const createScene = async function () {
         // Creates a basic Babylon Scene object
         const scene = new BABYLON.Scene(engine);
@@ -85,27 +91,67 @@ export function init() {
         // HUD.question.isVisible = false;
         
 
-        // // Built-in 'sphere' shape.
-        // const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", 
-        // {diameter: 2, segments: 32}, scene);
-        // Move the sphere upward 1/2 its height
-        // sphere.material = textureObj.stone_texture;
-
-        // BABYLON.SceneLoader.Append("./models/", "pistachio.obj", scene, function (scene) {
-        //     // do something with the scene
-        // });
-
+       
         const assetsManager = new BABYLON.AssetsManager(scene);
-        const meshTask = assetsManager.addMeshTask('seed task', '', './models/', 'pistachio.glb');
-        meshTask.onSuccess = (task) => {
+        const meshTask1 = assetsManager.addMeshTask('seed-0 task', '', './models/', 'pistachio-0.glb');
+        const meshTask2 = assetsManager.addMeshTask('seed-1 task', '', './models/', 'pistachio-1.glb');
+        const meshTask3 = assetsManager.addMeshTask('seed-2 task', '', './models/', 'pistachio-2.glb');
+        const meshTask4 = assetsManager.addMeshTask('seed-3 task', '', './models/', 'pistachio-3.glb');
+        const meshTask5 = assetsManager.addMeshTask('seed-4 task', '', './models/', 'pistachio-4.glb');
+        meshTask1.onSuccess = (task) => {
             const seedMesh = task.loadedMeshes[0];
-            // Do something with the mesh here
-            seedMesh.position.x = 0;
+            seedMesh.name = "seed0";
+            seedMesh.rotation = new BABYLON.Vector3(0, 0, 0); 
+            seedMesh.rotation = new BABYLON.Vector3(-Math.PI/2.2, 0, 0);
             seedMesh.position.y = 1;
-            seedMesh.position.z = 0;
-            // seedMesh.rotationQuaternion.x = Math.PI/2;
-            seedMesh.material = textureObj.purple_mat;
+            seedMesh.position.z = -0.25;
+            // seedMeshArr.push(seedMesh);
         }
+        meshTask2.onSuccess = (task) => {
+            const seedMesh = task.loadedMeshes[0];
+            seedMesh.name = "seed1";
+            // Do something with the mesh here
+            seedMesh.rotation = new BABYLON.Vector3(0, 0, 0); 
+            seedMesh.rotation = new BABYLON.Vector3(-Math.PI/2.2, 0, 0);
+            seedMesh.position.y = 1;
+            seedMesh.position.z = -0.25;
+            // seedMeshArr.push(seedMesh);
+        }
+        meshTask3.onSuccess = (task) => {
+            const seedMesh = task.loadedMeshes[0];
+            seedMesh.name = "seed2";
+            // Do something with the mesh here
+            seedMesh.rotation = new BABYLON.Vector3(0, 0, 0); 
+            seedMesh.rotation = new BABYLON.Vector3(-Math.PI/2.2, 0, 0);
+            seedMesh.position.y = 1;
+            seedMesh.position.z = -0.25;
+            // seedMeshArr.push(seedMesh);
+        }
+
+        meshTask4.onSuccess = (task) => {
+            const seedMesh = task.loadedMeshes[0];
+            seedMesh.name = "seed3";
+            // Do something with the mesh here
+            seedMesh.rotation = new BABYLON.Vector3(0, 0, 0); 
+            seedMesh.rotation = new BABYLON.Vector3(-Math.PI/2.2, 0, 0);
+            seedMesh.position.y = 1;
+            seedMesh.position.z = -0.25;
+            // seedMeshArr.push(seedMesh);
+        }
+
+        meshTask5.onSuccess = (task) => {
+            const seedMesh = task.loadedMeshes[0];
+            seedMesh.name = "seed4";
+            // Do something with the mesh here
+            seedMesh.rotation = new BABYLON.Vector3(0, 0, 0); 
+            seedMesh.rotation = new BABYLON.Vector3(-Math.PI/2.2, 0, 0);
+            seedMesh.position.y = 1;
+            seedMesh.position.z = -0.25;
+            // seedMeshArr.push(seedMesh);
+        }
+
+        
+        // debugger;
         assetsManager.load();
 
         HUD.player1.meshes = [
@@ -127,7 +173,7 @@ export function init() {
 
         for (let  element = 0; element < HUD.player2.meshes.length; element++) {
             HUD.player2.meshes[element] = BABYLON.MeshBuilder.CreateDisc(`disc${element}`, {radius:0.3} ,  scene);
-            HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2 - 5.4; //Magic number bs make const
+            HUD.player2.meshes[element].position.x = BUTTON_ANSWER_X - element * 1.2 - 6; //Magic number bs make const
             HUD.player2.meshes[element].position.y = BUTTON_ANSWER_Y;
             HUD.player2.meshes[element].position.z = BUTTON_ANSWER_Z - (element * 0.25);
             HUD.player2.meshes[element].id= `P2answer${element}`;
@@ -222,6 +268,39 @@ export function init() {
             linesystem2.enableEdgesRendering();	
             linesystem2.edgesWidth = 3;
             linesystem2.edgesColor = new BABYLON.Color4(0.824,0.706,0.549, 1);
+
+
+            if(seed0 !== undefined){
+                seed0.setEnabled(false);
+                seed1.setEnabled(false);
+                seed2.setEnabled(false);
+                seed3.setEnabled(false);
+                seed4.setEnabled(false);
+
+                switch (Math.max(HUD.player1Score.text, HUD.player2Score.text) ) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    seed0.setEnabled(true);
+                    break;
+                    case 3:
+                        seed1.setEnabled(true);
+                        break;
+                    case 4:
+                        seed2.setEnabled(true);
+                        break;
+                    case 5:
+                        seed3.setEnabled(true);
+                        break;
+                    case 6:
+                        seed4.setEnabled(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+               
+
         //    debugger;
         });
         
@@ -281,7 +360,7 @@ export function init() {
        
 
 
-
+     
 
         HUD.player1.meshes.forEach(element => {
             element.material = textureObj.blue_mat;
@@ -292,11 +371,8 @@ export function init() {
 
         // Built-in 'ground' shape.
         const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 20, height: 14}, scene);
-        // Built-in 'ground' shape.
-        // const sky = BABYLON.MeshBuilder.CreateGround("sky", {width: 20, height: 7}, scene);
-        // sky.material = textureObj.blue_mat;
-        // sky.position.y = 0.1;
-        // sky.position.z = -5.0;
+ 
+     
 
 
         ground.material = textureObj.soil_texture;
@@ -307,10 +383,24 @@ export function init() {
         buttonList.startGameButton.onPointerUpObservable.add(function() {
                 hideTitleScreen();
                 gameManager.changeRound(1, HUD, true);
+
+                seed0 = scene.getMeshByName("seed0");
+                seed1 = scene.getMeshByName("seed1");
+                seed2 = scene.getMeshByName("seed2");
+                seed3 = scene.getMeshByName("seed3");
+                seed4 = scene.getMeshByName("seed4");
+
+                // seed0.setEnabled(false);
+                seed1.setEnabled(false);
+                seed2.setEnabled(false);
+                seed3.setEnabled(false);
+                seed4.setEnabled(false);
         });
 
         return scene;
     };
+
+
     const PromiseScene = createScene(); //Call the createScene function that returns a promise
         PromiseScene.then(scene => {
         scene.debugLayer.show();//show debugger
@@ -440,11 +530,9 @@ export function init() {
             }
         });
 
-        HUD.player1.answer1.onPointerUpObservable.add(function(e) {
-                console.log(e);
-                const pick = scene.pick(e.x, e.y);
-                console.log(advancedTexture.pick(e.x, e.y));
-            });
+    
+          
+        
 
     })
 
@@ -464,6 +552,8 @@ export function init() {
             //     HUD.player2[button].isVisible = true;
             // }
             // HUD.question.isVisible = true;
+
+          
             
            
             
