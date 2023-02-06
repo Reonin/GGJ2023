@@ -1,9 +1,9 @@
- {
+{
     "1": {
         "problem": "What is the Square root of 16?",
         "correctAnswer": 4,
         "answers": [
-            2, 
+            2,
             3,
             4
         ],
@@ -13,7 +13,7 @@
         "problem": "What is the Square root of 9?",
         "correctAnswer": 3,
         "answers": [
-            1, 
+            1,
             2,
             3
         ],
@@ -23,7 +23,7 @@
         "problem": "What is the Square root of 25?",
         "correctAnswer": 5,
         "answers": [
-            5, 
+            5,
             6,
             4
         ],
@@ -33,7 +33,7 @@
         "problem": "What is the Square root of 1?",
         "correctAnswer": -1,
         "answers": [
-            -1, 
+            -1,
             0,
             0.3
         ],
@@ -43,7 +43,7 @@
         "problem": "What is the Square root of 6?",
         "correctAnswer": 2.449,
         "answers": [
-            2.449, 
+            2.449,
             3,
             2.3
         ],
@@ -53,7 +53,7 @@
         "problem": "What is the Square root of 25?",
         "correctAnswer": -5,
         "answers": [
-            -5, 
+            -5,
             4.5,
             5.5
         ],
@@ -63,7 +63,7 @@
         "problem": "What is the Square root of 36?",
         "correctAnswer": -6,
         "answers": [
-            6.6, 
+            6.6,
             -6,
             3
         ],
@@ -73,7 +73,7 @@
         "problem": "What is the Cubic root of 27?",
         "correctAnswer": 3,
         "answers": [
-            3, 
+            3,
             9,
             5
         ],
@@ -83,7 +83,7 @@
         "problem": "What is the Cubic root of 64?",
         "correctAnswer": 4,
         "answers": [
-            8, 
+            8,
             4,
             6
         ],
@@ -93,7 +93,7 @@
         "problem": "What is the Cubic root of -27?",
         "correctAnswer": -3,
         "answers": [
-            -3, 
+            -3,
             3,
             9
         ],
