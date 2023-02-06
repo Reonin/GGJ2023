@@ -43,8 +43,16 @@
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
     <script type="module">
-        import { init } from '/GGJ2023/js/main.js';
-        
+        let hostPath;
+        if(location.hostname === "localhost"){
+            hostPath = '.';
+        }
+        else {
+            hostPath = '/GGJ2023';
+        }
+
+        let { init } = await import( hostPath + '/js/main.js');
+
         init();
     </script>
 </body>
