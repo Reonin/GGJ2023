@@ -403,7 +403,8 @@ export function init() {
                             if (HUD.player1Score.text < p1FullPaths.length) {
                                 p1Roots.push(p1FullPaths[HUD.player1Score.text]);
                             } else {
-                                HUD.question.text = "Player one wins!"
+                                HUD.question.text = "Player one wins!";
+                                setTimeout(() => { location.reload();}, 10000);
                             }
 
                         }
@@ -421,7 +422,8 @@ export function init() {
                             if (HUD.player1Score.text < p1FullPaths.length) {
                                 p1Roots.push(p1FullPaths[HUD.player1Score.text]);
                             } else {
-                                HUD.question.text = "Player one wins!"
+                                HUD.question.text = "Player one wins!";
+                                setTimeout(() => { location.reload();}, 10000);
                             }
                         }
                         else {
@@ -438,7 +440,9 @@ export function init() {
                             if (HUD.player1Score.text < p1FullPaths.length) {
                                 p1Roots.push(p1FullPaths[HUD.player1Score.text]);
                             } else {
-                                HUD.question.text = "Player one wins!"
+                                HUD.question.text = "Player one wins!";
+                                setTimeout(() => { location.reload();}, 10000);
+
                             }
                         }
                         else {
@@ -455,7 +459,8 @@ export function init() {
                             if (HUD.player2Score.text < p2FullPaths.length) {
                                 p2Roots.push(p2FullPaths[HUD.player2Score.text]);
                             } else {
-                                HUD.question.text = "Player two wins!"
+                                HUD.question.text = "Player two wins!";
+                                setTimeout(() => { location.reload();}, 10000);
                             }
                         }
                         else {
@@ -472,7 +477,8 @@ export function init() {
                             if (HUD.player2Score.text < p2FullPaths.length) {
                                 p2Roots.push(p2FullPaths[HUD.player2Score.text]);
                             } else {
-                                HUD.question.text = "Player two wins!"
+                                HUD.question.text = "Player two wins!";
+                                setTimeout(() => { location.reload();}, 10000);
                             }
                         }
                         else {
@@ -488,7 +494,8 @@ export function init() {
                             if (HUD.player2Score.text < p2FullPaths.length) {
                                 p2Roots.push(p2FullPaths[HUD.player2Score.text]);
                             } else {
-                                HUD.question.text = "Player two wins!"
+                                HUD.question.text = "Player two wins!";
+                                setTimeout(() => { location.reload();}, 10000);
                             }
                         }
                         else {
