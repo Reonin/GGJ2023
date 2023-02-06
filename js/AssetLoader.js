@@ -1,5 +1,4 @@
 export default function loadAssets(BABYLON, scene) {
-    // BABYLON.SceneLoader.ImportMesh("", Assets.meshes.pirateFort.rootUrl, Assets.meshes.pirateFort.filename, scene)
     let hostPath;
 
     if(location.hostname === "localhost"){
@@ -8,10 +7,6 @@ export default function loadAssets(BABYLON, scene) {
     else {
         hostPath = '/GGJ2023/';
     }
-
-    const stone_texture = new BABYLON.StandardMaterial("stone", scene);
-    stone_texture.diffuseTexture = new BABYLON.Texture( hostPath + "textures/stoneso.png", scene);
-
 
     const purple_mat = new BABYLON.StandardMaterial("purple_mat", scene);
     purple_mat.diffuseColor = new BABYLON.Color3(1, 0, 1);
@@ -28,6 +23,6 @@ export default function loadAssets(BABYLON, scene) {
     const soil_texture = new BABYLON.StandardMaterial("soil", scene);
     soil_texture.diffuseTexture = new BABYLON.Texture(hostPath + "/textures/soilCross.png", scene);
 
-    const textureObj = { stone_texture, purple_mat, blue_mat, red_mat, brown_mat, soil_texture };
+    const textureObj = { purple_mat, blue_mat, red_mat, brown_mat, soil_texture };
     return textureObj;
 }

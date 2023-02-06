@@ -4,7 +4,5 @@ export default function setUpButtons(advancedTexture, buttonList) {
     buttonList.startGameButton.onPointerUpObservable.add(function () {
         console.log("%cStart Game Pressed", "color:green");
     });
-
-
 }
 

@@ -88,10 +88,7 @@ export function init() {
         audioManager = new AudioManager(BABYLON, scene);
 
         audioManager.loadSounds();
-        // HUD.question.isVisible = false;
-
-
-
+ 
         const assetsManager = new BABYLON.AssetsManager(scene);
         const meshTask1 = assetsManager.addMeshTask('seed-0 task', '', './models/', 'pistachio-0.glb');
         const meshTask2 = assetsManager.addMeshTask('seed-1 task', '', './models/', 'pistachio-1.glb');
@@ -105,7 +102,6 @@ export function init() {
             seedMesh.rotation = new BABYLON.Vector3(-Math.PI / 2.2, 0, 0);
             seedMesh.position.y = 1;
             seedMesh.position.z = -0.25;
-            // seedMeshArr.push(seedMesh);
         }
         meshTask2.onSuccess = (task) => {
             const seedMesh = task.loadedMeshes[0];
@@ -115,7 +111,6 @@ export function init() {
             seedMesh.rotation = new BABYLON.Vector3(-Math.PI / 2.2, 0, 0);
             seedMesh.position.y = 1;
             seedMesh.position.z = -0.25;
-            // seedMeshArr.push(seedMesh);
         }
         meshTask3.onSuccess = (task) => {
             const seedMesh = task.loadedMeshes[0];
@@ -125,7 +120,6 @@ export function init() {
             seedMesh.rotation = new BABYLON.Vector3(-Math.PI / 2.2, 0, 0);
             seedMesh.position.y = 1;
             seedMesh.position.z = -0.25;
-            // seedMeshArr.push(seedMesh);
         }
 
         meshTask4.onSuccess = (task) => {
@@ -136,7 +130,6 @@ export function init() {
             seedMesh.rotation = new BABYLON.Vector3(-Math.PI / 2.2, 0, 0);
             seedMesh.position.y = 1;
             seedMesh.position.z = -0.25;
-            // seedMeshArr.push(seedMesh);
         }
 
         meshTask5.onSuccess = (task) => {
@@ -147,11 +140,8 @@ export function init() {
             seedMesh.rotation = new BABYLON.Vector3(-Math.PI / 2.2, 0, 0);
             seedMesh.position.y = 1;
             seedMesh.position.z = -0.25;
-            // seedMeshArr.push(seedMesh);
         }
 
-
-        // debugger;
         assetsManager.load();
 
         HUD.player1.meshes = [
@@ -181,7 +171,6 @@ export function init() {
         };
 
 
-
         HUD.player1.answer1.linkWithMesh(HUD.player1.meshes[0]);
         HUD.player1.answer2.linkWithMesh(HUD.player1.meshes[1]);
         HUD.player1.answer3.linkWithMesh(HUD.player1.meshes[2]);
@@ -191,14 +180,12 @@ export function init() {
         HUD.player2.answer3.linkWithMesh(HUD.player2.meshes[2]);
 
 
-
-        // Code in this function will run ~60 times per second
         const directionArr1 = [true, true, true];
         const directionArr2 = [true, true, true];
 
-
         let linesystem;
         let linesystem2;
+        // Code in this function will run ~60 times per second
         scene.registerBeforeRender(() => {
 
             HUD.player1.meshes.forEach((but, index) => {
@@ -269,7 +256,7 @@ export function init() {
             linesystem2.edgesWidth = 3;
             linesystem2.edgesColor = new BABYLON.Color4(0.824, 0.706, 0.549, 1);
 
-
+            //Watch the seedling grow based on the highest score
             if (seed0 !== undefined) {
                 seed0.setEnabled(false);
                 seed1.setEnabled(false);
@@ -300,8 +287,6 @@ export function init() {
                 }
             }
 
-
-            //    debugger;
         });
 
         p1Roots = [
@@ -336,7 +321,7 @@ export function init() {
             new BABYLON.Vector3(0, 1, 1) //init
             ]
         ];
-
+        //mirror of the player 1 roots
         p2FullPaths = [
             [new BABYLON.Vector3(0, 1, 0),
             new BABYLON.Vector3(0, 1, 1) //init
@@ -346,20 +331,17 @@ export function init() {
                 new BABYLON.Vector3(-1, 1, 1.5), //diag
             ],
             [new BABYLON.Vector3(-1, 1, 1.5),
-            new BABYLON.Vector3(-6.5, 1, 1.5), //left
+            new BABYLON.Vector3(-6.5, 1, 1.5), //right
             ],
             [new BABYLON.Vector3(-6.5, 1, 1.5),
             new BABYLON.Vector3(-6.5, 1, 5.5),//down
             ],
             [new BABYLON.Vector3(-6.5, 1, 5.5),
-            new BABYLON.Vector3(-2, 1, 5.5), //right
+            new BABYLON.Vector3(-2, 1, 5.5), //left
             ],
             [new BABYLON.Vector3(-2, 1, 5.5),
             new BABYLON.Vector3(-2, 1, 1.5), //up
             ]];
-
-
-
 
 
         HUD.player1.meshes.forEach(element => {
@@ -371,8 +353,6 @@ export function init() {
 
         // Built-in 'ground' shape.
         const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 20, height: 14 }, scene);
-
-
 
 
         ground.material = textureObj.soil_texture;
@@ -390,7 +370,7 @@ export function init() {
             seed3 = scene.getMeshByName("seed3");
             seed4 = scene.getMeshByName("seed4");
 
-            // seed0.setEnabled(false);
+            // seed0 is shown from the start
             seed1.setEnabled(false);
             seed2.setEnabled(false);
             seed3.setEnabled(false);
@@ -403,11 +383,10 @@ export function init() {
 
     const PromiseScene = createScene(); //Call the createScene function that returns a promise
     PromiseScene.then(scene => {
-        scene.debugLayer.show();//show debugger
+        // scene.debugLayer.show();//show debugger
         // Register a render loop to repeatedly render the scene
         engine.runRenderLoop(function () {
             scene.render();
-            // console.log(scene.pointerX + '||' + scene.pointerY);
         });
         const hl = new BABYLON.HighlightLayer("hl1", scene);
         scene.onKeyboardObservable.add((kbInfo) => {
@@ -531,12 +510,7 @@ export function init() {
         });
 
 
-
-
-
     })
-
-
 
 
     const hideTitleScreen = () => {
@@ -544,20 +518,6 @@ export function init() {
         HUD.subtitle.isVisible = false;
 
         buttonList.startGameButton.isVisible = false;
-
-        // for (const button in HUD.player1) {
-        //     HUD.player1[button].isVisible = true;
-        // }
-        // for (const button in HUD.player2) {
-        //     HUD.player2[button].isVisible = true;
-        // }
-        // HUD.question.isVisible = true;
-
-
-
-
-
-
     }
 
 
