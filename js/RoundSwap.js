@@ -53,10 +53,10 @@ export class GameManager {
         let hostPath;
 
         if(location.hostname === "localhost"){
-            hostPath = '/GGJ2023/';
+            hostPath = '../';
         }
         else {
-            hostPath = '../';
+            hostPath = '/GGJ2023/';
         }
 
         try {

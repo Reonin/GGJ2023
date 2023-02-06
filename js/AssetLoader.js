@@ -3,10 +3,10 @@ export default function loadAssets(BABYLON, scene) {
     let hostPath;
 
     if(location.hostname === "localhost"){
-        hostPath = '/GGJ2023/';
+        hostPath = '../';
     }
     else {
-        hostPath = '../';
+        hostPath = '/GGJ2023/';
     }
 
     const stone_texture = new BABYLON.StandardMaterial("stone", scene);
