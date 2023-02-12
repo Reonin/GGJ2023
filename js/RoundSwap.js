@@ -11,6 +11,26 @@ export class GameManager {
 
         // console.log(this.QuestionData);
 
+        const keys = Object.keys(this.QuestionData);
+        const randomIndex = keys[Math.floor(Math.random() * keys.length)];
+        const item = this.QuestionData[randomIndex];
+
+        console.log(this.QuestionData)
+
+        HUD.question.text = item.problem;
+
+        HUD.player1.answer1.text = item.answers[0];
+        HUD.player2.answer1.text = item.answers[2];
+
+        HUD.player1.answer2.text = item.answers[1];
+        HUD.player2.answer2.text = item.answers[1];
+
+        HUD.player1.answer3.text = item.answers[2];
+        HUD.player2.answer3.text = item.answers[0];
+
+        HUD.correctAnswer = item.correctAnswer;
+
+
         if (!("scramble" in Array.prototype)) {
             Object.defineProperty(Array.prototype, "scramble", {
                 enumerable: false,
@@ -27,25 +47,11 @@ export class GameManager {
             });
         }
 
-        this.QuestionData[this.roundNumber].answers.forEach(q => {
-            this.QuestionData[this.roundNumber].answers.scramble()
+        item.answers.forEach(q => {
+            item.answers.scramble()
         });
 
-
-
-        HUD.question.text = this.QuestionData[this.roundNumber].problem;
-
-        HUD.player1.answer1.text = this.QuestionData[this.roundNumber].answers[0];
-        HUD.player2.answer1.text = this.QuestionData[this.roundNumber].answers[2];
-
-        HUD.player1.answer2.text = this.QuestionData[this.roundNumber].answers[1];
-        HUD.player2.answer2.text = this.QuestionData[this.roundNumber].answers[1];
-
-        HUD.player1.answer3.text = this.QuestionData[this.roundNumber].answers[2];
-        HUD.player2.answer3.text = this.QuestionData[this.roundNumber].answers[0];
-
-        HUD.correctAnswer = this.QuestionData[this.roundNumber].correctAnswer;
-
+        delete this.QuestionData[randomIndex];
     }
 
     
@@ -109,10 +115,7 @@ export class GameManager {
                 this.player2IsLocked = false;
             }, time);
         }
-
     }
-
-
 }
 
 

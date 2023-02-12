@@ -108,5 +108,15 @@
             4
         ],
         "difficulty": "easy"
+    },
+    "12": {
+        "problem": "What is the Square root of 100?",
+        "correctAnswer": -10,
+        "answers": [
+            -10,
+            25,
+            5
+        ],
+        "difficulty": "medium"
     }
 }
