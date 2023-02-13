@@ -118,5 +118,45 @@
             5
         ],
         "difficulty": "medium"
+    },
+    "13": {
+        "problem": "What is the Cubic root of -6859?",
+        "correctAnswer": -19,
+        "answers": [
+            -19,
+            -18,
+            -17
+        ],
+        "difficulty": "hard"
+    },
+    "14": {
+        "problem": "What is the Square root of 121?",
+        "correctAnswer": -11,
+        "answers": [
+            -11,
+            1.1,
+            13
+        ],
+        "difficulty": "medium"
+    },
+    "15": {
+        "problem": "What is the Square root of 4096?",
+        "correctAnswer": 64,
+        "answers": [
+            64,
+            128,
+            80
+        ],
+        "difficulty": "medium"
+    },
+    "16": {
+        "problem": "What is the Square root of 783?",
+        "correctAnswer": 9.2169,
+        "answers": [
+            9.2169,
+            7.356,
+            11.31
+        ],
+        "difficulty": "hard"
     }
 }
